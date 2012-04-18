@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2012 FuseSource
+    
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.fusesource.osgi</groupId>
+    <artifactId>osgi-parent-template</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>FuseSource :: Template :: OSGi Parent POM</name>
+    <description>A Maven Parent POM Optimized for OSGi Projects</description>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <properties>
+
+        <!-- ======================================================= -->
+        <!-- MAVEN PLUGIN SETTINGS                                   -->
+        <!-- ======================================================= -->
+        <!-- Source Encoding Properties                              -->
+        <!-- Sets the default file encoding for all filtered and     -->
+        <!-- generated files.                                        -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Source Encoding Properties -->
+
+        <!-- Compiler Properties -->
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.fork>true</maven.compiler.fork>
+        <maven.compiler.maxmem>256m</maven.compiler.maxmem>
+        <maven.compiler.verbose>true</maven.compiler.verbose>
+        <!-- Compiler Properties -->
+
+        <!-- Surefire/Failsafe Properties -->
+        <maven.test.skip>false</maven.test.skip>
+        <maven.test.failure.ignore>false</maven.test.failure.ignore>
+        <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+        <!-- Surefire/Failsafe Properties -->
+
+        <!-- OSGi bundles properties -->
+        <osgi.bundle.copyright.text></osgi.bundle.copyright.text>
+        <osgi.import.version>version="[$(version;==;${osgi.version.clean}),$(version;=+;${osgi.version.clean}))"</osgi.import.version>
+        <osgi.import.strict.version>version="[$(version;==;${osgi.version.clean}),$(version;=+;${osgi.version.clean}))"</osgi.import.strict.version>
+        <osgi.import.default.version>[$(version;==;$(@)),$(version;=+;$(@)))</osgi.import.default.version>
+        <osgi.export.pkg>${symbolic.name}</osgi.export.pkg>
+        <osgi.import.pkg>
+            !${osgi.export.pkg},
+            *
+        </osgi.import.pkg>
+        <osgi.service.component.pkg>*</osgi.service.component.pkg>
+        <osgi.activator></osgi.activator>
+        <osgi.failok>false</osgi.failok>
+        <osgi.private.pkg>${symbolic.name}.internal*</osgi.private.pkg>
+        <osgi.export>${osgi.export.pkg};${osgi.version}</osgi.export>
+        <osgi.version>version=${schema.version}</osgi.version>
+        <osgi.split.pkg>-split-package:=first</osgi.split.pkg>
+        <osgi.import>${osgi.import.pkg}</osgi.import>
+        <osgi.dynamic>${osgi.dynamicimport.pkg}</osgi.dynamic>
+        <osgi.symbolic.name>${symbolic.name}</osgi.symbolic.name>
+        <osgi.exclude.dependencies>false</osgi.exclude.dependencies>
+        <osgi.include.resource></osgi.include.resource>
+        <osgi.embed.dependency></osgi.embed.dependency>
+        <osgi.service.component>${osgi.service.component.pkg}</osgi.service.component>
+        <!-- OSGi bundles properties -->
+        <!-- ======================================================= -->
+        <!-- MAVEN PLUGIN Properties                                 -->
+        <!-- ======================================================= -->
+
+        <activemq.version>5.5.1-fuse-03-06</activemq.version>
+        <camel.version>2.8.0-fuse-03-07</camel.version>
+        <cxf.version>2.4.3-fuse-01-02</cxf.version>
+        <karaf.version>2.2.2-fuse-03-06</karaf.version>
+
+        <ant.version>1.7.1</ant.version>
+        <ant.contrib.version>1.0b3</ant.contrib.version>
+        <bnd.version>1.50.0</bnd.version>
+        <felix.bundlerepository.version>1.6.4</felix.bundlerepository.version>
+        <felix.compendium.version>4.2.0</felix.compendium.version>
+        <felix.configadmin.version>1.2.8</felix.configadmin.version>
+        <felix.core.version>4.2.0</felix.core.version>
+        <felix.fileinstall.version>3.3.1</felix.fileinstall.version>
+        <felix.framework.version>3.0.9</felix.framework.version>
+        <felix.osgi.version>1.4.0</felix.osgi.version>
+        <felix.prefs.version>1.0.2</felix.prefs.version>
+        <felix.scr.version>1.6.0</felix.scr.version>
+        <junit.version>4.8</junit.version>
+        
+        <!-- Maven Plugin Versions -->
+        <maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
+        <maven.bundle.plugin.version>2.3.6</maven.bundle.plugin.version>
+        <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
+        <maven.failsafe.plugin.version>2.12</maven.failsafe.plugin.version>
+        <maven.javadoc.plugin.version>2.7</maven.javadoc.plugin.version>
+        <maven.properties.plugin.version>1.0-alpha-2</maven.properties.plugin.version>
+        <maven.source.plugin.version>2.1.2</maven.source.plugin.version>
+        <maven.surefire.plugin.version>2.6</maven.surefire.plugin.version>
+        <!-- Maven Plugin Versions -->
+    </properties>
+    <distributionManagement>
+        <repository>
+            <id>release-repo</id>
+            <url>https://raw.github.com/sully6768/sully6768-mvn-repo/master/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>https://raw.github.com/sully6768/sully6768-mvn-repo/master/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>fusesource-releases</id>
+            <name>FuseSource Release Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>fusesource-snapshots</id>
+            <name>FuseSource Snapshot Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>fusesource-proxy</id>
+            <name>FuseSource Proxy Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/m2-proxy</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>fusesource-releases</id>
+            <name>FuseSource Release Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>fusesource-snapshots</id>
+            <name>FuseSource Snapshot Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/public-snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>fusesource-proxy</id>
+            <name>FuseSource Proxy Repository</name>
+            <url>http://repo.fusesource.com/nexus/content/groups/m2-proxy</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-core</artifactId>
+                <version>${activemq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.activemq</groupId>
+                        <artifactId>activeio-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-j2ee-management_1.0_spec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.xml</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-pool</artifactId>
+                <version>${activemq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-pool</groupId>
+                        <artifactId>commons-pool</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-camel</artifactId>
+                <version>${activemq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.camel</groupId>
+                        <artifactId>camel-web</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-core</artifactId>
+                <version>${camel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Antrun Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven.antrun.plugin.version}</version>
+                </plugin>
+                <!-- Bundle Plugin -->
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${maven.bundle.plugin.version}</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <!-- Compiler Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compile.source}</source>
+                        <target>${maven.compile.target}</target>
+                    </configuration>
+                </plugin>
+                <!-- Javadoc Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.javadoc.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${maven.properties.plugin.version}</version>
+                </plugin>
+                <!-- Source Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven.source.plugin.version}</version>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <attach>true</attach>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin.version}</version>
+                    <inherited>true</inherited>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven.failsafe.plugin.version}</version>
+                    <inherited>true</inherited>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>create-prop</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+                                <property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp" />
+                                <property name="mv" value="${project.version}" />
+                                <property name="gi" value="${project.groupId}" />
+                                <property name="ai" value="${project.artifactId}" />
+                                <propertyregex property="gi.p1" input="${gi}" regexp="[-]" replace="\."
+                                    defaultValue="${gi}" />
+                                <propertyregex property="ai.p1" input="${ai}" regexp="[-]" replace="\."
+                                    defaultValue="${ai}" />
+                                <propertyregex property="ov.p1" input="${mv}"
+                                    regexp="(\d+)(?:\.(\d+)(?:\.(\d+))?)?(?:[^a-zA-Z0-9](.*))?" replace="\1" defaultValue="0" />
+                                <propertyregex property="ov.p2" input="${mv}"
+                                    regexp="(\d+)(?:\.(\d+)(?:\.(\d+))?)?(?:[^a-zA-Z0-9](.*))?" replace=".\2" defaultValue=".0" />
+                                <propertyregex property="ov.p3" input="${mv}"
+                                    regexp="(\d+)(?:\.(\d+)(?:\.(\d+))?)?(?:[^a-zA-Z0-9](.*))?" replace=".\3" defaultValue=".0" />
+                                <propertyregex property="ov.p4" input="${mv}"
+                                    regexp="(\d+)(?:\.(\d+)(?:\.(\d+))?)?(?:[^a-zA-Z0-9](.*))?" replace=".\4" defaultValue="" />
+                                <propertyregex property="ov.p1a" input="${ov.p1}" regexp="(.+)" replace="\1"
+                                    defaultValue="0" />
+                                <propertyregex property="ov.p2a" input="${ov.p2}" regexp="(\..+)" replace="\1"
+                                    defaultValue=".0" />
+                                <propertyregex property="ov.p3a" input="${ov.p3}" regexp="(\..+)" replace="\1"
+                                    defaultValue=".0" />
+                                <propertyregex property="ov.p4a" input="${ov.p4}" regexp="(\..+)" replace="\1"
+                                    defaultValue="" />
+                                <property name="ov" value="${ov.p1a}${ov.p2a}${ov.p3a}${ov.p4a}" />
+                                <property name="os" value="${ov.p1a}${ov.p2a}${ov.p3a}" />
+                                <property name="sn" value="${gi.p1}.${ai.p1}" />
+                                <echo message="Symbolic Name :   ${sn}" />
+                                <echo message="Maven version :   ${mv}" />
+                                <echo message="OSGi version  :   ${os}" />
+                                <mkdir dir="target" />
+                                <echo file="target/osgi.version.txt">
+                                    symbolic.name = ${sn}${line.separator}osgi.version.clean =
+                                    ${ov}${line.separator}schema.version = ${os}
+                              </echo>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>${ant.contrib.version}</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-launcher</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-nodeps</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-apache-oro</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-apache-regexp</artifactId>
+                        <version>${ant.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>oro</groupId>
+                        <artifactId>oro</artifactId>
+                        <version>2.0.8</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>${maven.properties.plugin.version}</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>target/osgi.version.txt</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven.bundle.plugin.version}</version>
+                <extensions>true</extensions>
+                <inherited>true</inherited>
+                <configuration>
+                    <excludeDependencies>${osgi.exclude.dependencies}</excludeDependencies>
+                    <instructions>
+                        <Bundle-Copyright>${osgi.bundle.copyright.text}</Bundle-Copyright>
+                        <Implementation-Title>${project.name}</Implementation-Title>
+                        <Implementation-Version>${project.version}</Implementation-Version>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-SymbolicName>${osgi.symbolic.name}</Bundle-SymbolicName>
+                        <Bundle-Version>${schema.version}</Bundle-Version>
+                        <Bundle-Activator>${osgi.activator}</Bundle-Activator>
+
+                        <Export-Package>${osgi.export}</Export-Package>
+                        <Import-Package>${osgi.import}</Import-Package>
+                        <DynamicImport-Package>${osgi.dynamic}</DynamicImport-Package>
+                        <Private-Package>${osgi.private.pkg}</Private-Package>
+                        <Embed-Dependency>${osgi.embed.dependency}</Embed-Dependency>
+                        <Service-Component>${osgi.service.component}</Service-Component>
+
+                        <_versionpolicy>${osgi.import.default.version}</_versionpolicy>
+                        <_failok>${osgi.failok}</_failok>
+
+                        <!-- Do not calculate uses for exports. -->
+                        <_nouses>true</_nouses>
+
+                        <!-- Do not include these in the manifest. -->
+                        <_removeheaders>
+                            Tool,Built-By,Created-By,Ignore-Package,Build-Jdk,Bnd-LastModified,Include-Resource,Private-Package
+                        </_removeheaders>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

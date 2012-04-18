@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.fusesource.osgi</groupId>
+  <artifactId>osgi-parent-template</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20120418163521</lastUpdated>
+  </versioning>
+</metadata>
